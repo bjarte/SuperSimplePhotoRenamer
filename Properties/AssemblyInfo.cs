@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ConsoleApplication1")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Super Simple Photo Renamer")]
+[assembly: AssemblyDescription("Renames photo/video files using the date the photo was taken")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ConsoleApplication1")]
+[assembly: AssemblyCompany("Basement Media")]
+[assembly: AssemblyProduct("Super Simple Photo Renamer")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

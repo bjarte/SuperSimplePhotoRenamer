@@ -1,29 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ExifLib;
 
-namespace ConsoleApplication1
+namespace Renamer
 {
     class Program
     {
         static void Main(string[] args)
         {
+            string[] filePaths = Directory.GetFiles(Directory.GetCurrentDirectory());
 
-
-            if (File.Exists("test.txt"))
+            foreach (var filePath in filePaths)
             {
-                Console.WriteLine("Please enter a new name for this file:");
-                string newFilename = Console.ReadLine();
-                if (newFilename != String.Empty)
+                Console.WriteLine(filePath);
+
+                if (filePath.ToLower().EndsWith("jpg") || filePath.ToLower().EndsWith("jpeg"))
                 {
-                    File.Move("test.txt", newFilename);
-                    if (File.Exists(newFilename))
+                    using (ExifReader reader = new ExifReader(filePath))
                     {
-                        Console.WriteLine("The file was renamed to " + newFilename);
-                        Console.ReadKey();
+                        // Extract the tag data using the ExifTags enumeration
+                        DateTime datePictureTaken;
+                        if (reader.GetTagValue(ExifTags.DateTimeDigitized,
+                            out datePictureTaken))
+                        {
+                            Console.WriteLine(" - EXIF date: " +
+                                              datePictureTaken.ToString("yyyy-MM-dd HH:mm:ss"));
+                        }
                     }
                 }
             }

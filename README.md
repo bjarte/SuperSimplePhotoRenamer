@@ -1,4 +1,4 @@
-﻿#How SuperSimplePhotoRenamer works and how to use it
+﻿# How SuperSimplePhotoRenamer works and how to use it
 
 The application renames files with following file extensions: JPG, JPEG, PNG, GIF, MP4, AVI, MOV, MPG, MPEG
 
@@ -20,8 +20,8 @@ If there are several files with the same date, the application adds a counter to
 
 The date used for the file name is found using these rules, using the first matching rule and then ignoring the rest.
 
-1. If the filename contains a date, use this date.
-2. If the file contains EXIF data for "Date taken", use this date.
+1. If the file contains EXIF data for "Date taken", use this date.
+2. If the filename contains a date, use this date.
 3. If no other information is found, use the date from file property "Modified".
 
 ### Why used "Modifed" instead of "Created" date?

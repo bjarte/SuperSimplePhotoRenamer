@@ -16,7 +16,7 @@ namespace Renamer.Helpers
             Console.WriteLine(stringBuilder.ToString());
         }
 
-        private static string PadToColumnWidth(string input)
+        private static string PadToColumnWidth(string input, bool leftAlign = true)
         {
             if (input.Length > Settings.ColumnWidth)
             {
@@ -26,7 +26,7 @@ namespace Renamer.Helpers
 
             while (input.Length < Settings.ColumnWidth)
             {
-                input = $" {input}";
+                input = leftAlign ? $"{input} " : $" {input}";
             }
 
             return $"{input}{Settings.ColumnSpace}";

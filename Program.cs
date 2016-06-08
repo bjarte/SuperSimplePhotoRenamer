@@ -14,6 +14,10 @@ namespace Renamer
     {
         private static void Main(string[] args)
         {
+
+            // Print column headers
+            OutputHelpers.WriteColumns(new[] { "Existing filename", "New filename", "Date source" });
+
             string[] filePaths = Directory.GetFiles(Directory.GetCurrentDirectory());
 
             foreach (var filePath in filePaths.Where(x => File.Exists(x)))
@@ -29,8 +33,6 @@ namespace Renamer
                 {
                     continue;
                 }
-
-                // Parse file name as date
 
                 // Get XMP metadata with taglib
                 DateTime xmpDateCreated = new DateTime();
@@ -76,57 +78,67 @@ namespace Renamer
                     }
                 }
 
-                // Print all results
-                Console.WriteLine();
+                // Print existing filename
+                //OutputHelpers.WriteColumns(new[] { "Existing filename:", fileName });
 
-                // Print filename and date from filename
+                var newFileName = fileName;
+                var nameSource = "Original filename";
+
+                // Print date found in existing filename
                 var fileNameDate = fileName.ConvertToDateTime();
                 if (fileNameDate != new DateTime())
                 {
-                    OutputHelpers.WriteColumns(new[]
-                    { fileName, "Date from filename:", fileNameDate.ToString(Settings.DateFormat) + fileExtension });
-                }
-                else
-                {
-                    OutputHelpers.WriteColumns(new[] { fileName, "Date from filename:", "---" });
+                    newFileName = fileNameDate.ToString(Settings.DateFormat) + fileExtension;
+                    nameSource = "Date from filename";
+                    //OutputHelpers.WriteColumns(new[] { "Date from filename:", newFileName });
                 }
 
                 // Print date found in XMP DateCreated property
                 if (xmpDateCreated != new DateTime())
                 {
-                    OutputHelpers.WriteColumns(new[] { "", "XMP DateCreated:", xmpDateCreated.ToString(Settings.DateFormat) + fileExtension });
+                    newFileName = xmpDateCreated.ToString(Settings.DateFormat) + fileExtension;
+                    nameSource = "XMP DateCreated";
+                    //OutputHelpers.WriteColumns(new[] { "XMP DateCreated:", newFileName });
                 }
 
                 // Print date found in MediaInfo Encoded_Date property
                 if (mediaInfoEncodedDate != new DateTime())
                 {
-                    OutputHelpers.WriteColumns(new[] { "", "MediaInfo Encoded_Date:", mediaInfoEncodedDate.ToString(Settings.DateFormat) + fileExtension });
+                    newFileName = mediaInfoEncodedDate.ToString(Settings.DateFormat) + fileExtension;
+                    nameSource = "Encoded_Date";
+                    //OutputHelpers.WriteColumns(new[] { "MediaInfo Encoded_Date:", newFileName });
                 }
 
                 // Print date found in MediaInfo Mastered_Date property
                 if (mediaInfoMasteredDate != new DateTime())
                 {
-                    OutputHelpers.WriteColumns(new[] { "", "MediaInfo Mastered_Date:", mediaInfoMasteredDate.ToString(Settings.DateFormat) + fileExtension });
+                    newFileName = mediaInfoMasteredDate.ToString(Settings.DateFormat) + fileExtension;
+                    nameSource = "Mastered_Date";
+                    //OutputHelpers.WriteColumns(new[] { "MediaInfo Mastered_Date:", newFileName });
                 }
 
                 // Print date found in EXIF Date Digitized property
                 if (exifDateDigitized != new DateTime())
                 {
-                    OutputHelpers.WriteColumns(new[] { "", "EXIF DateDigitized:", exifDateDigitized.ToString(Settings.DateFormat) + fileExtension });
+                    newFileName = exifDateDigitized.ToString(Settings.DateFormat) + fileExtension;
+                    nameSource = "EXIF DateDigitized";
+                    //OutputHelpers.WriteColumns(new[] { "EXIF DateDigitized:", newFileName });
                 }
+
+                OutputHelpers.WriteColumns(new[] { fileName, newFileName, nameSource });
 
                 // Print date found in File modified property
                 //var fileModified = File.GetLastWriteTime(fileName);
-                //OutputHelpers.WriteColumns(new[] { "", "File modified:", fileModified.ToString(Settings.DateFormat) });
+                //OutputHelpers.WriteColumns(new[] { "File modified:", fileModified.ToString(Settings.DateFormat) });
 
                 // Print date found in File created property
                 //var fileCreated = File.GetCreationTime(fileName);
-                //OutputHelpers.WriteColumns(new[] { "", "File created:", fileCreated.ToString(Settings.DateFormat) });
+                //OutputHelpers.WriteColumns(new[] { "File created:", fileCreated.ToString(Settings.DateFormat) });
             }
 
-            Console.WriteLine();
-            Console.WriteLine("Press any key to exit application...");
-            Console.Read();
+            //Console.WriteLine();
+            //Console.WriteLine("Press any key to exit application...");
+            //Console.Read();
         }
     }
 }

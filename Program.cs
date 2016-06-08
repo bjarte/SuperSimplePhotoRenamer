@@ -46,11 +46,10 @@ namespace Renamer
                         var dateCreated = node.Value;
 
                         DateTime.TryParse(dateCreated, out xmpDateCreated);
-
                     }
                 }
 
-                // Get metadata for videos with MediaInfoLib
+                // Get video metadata with MediaInfoLib
                 DateTime mediaInfoEncodedDate = new DateTime();
                 DateTime mediaInfoMasteredDate = new DateTime();
                 if (FileTypeHelpers.IsVideoFileType(fileExtension))
@@ -58,8 +57,6 @@ namespace Renamer
                     MediaInfo mediaInfo = new MediaInfo();
                     mediaInfo.Open(fileName);
 
-                    // Created date for Android MP4 files and iPhone MOV files (UTC time)
-                    // Format: UTC 2016-06-07 07:07:30
                     var encodedDateString = mediaInfo.Get(0, 0, "Encoded_Date");
                     mediaInfoEncodedDate = encodedDateString.ConvertToDateTime();
 
@@ -69,7 +66,7 @@ namespace Renamer
                     mediaInfo.Close();
                 }
 
-                // Get date from EXIF with ExifReader
+                // Get EXIF metadata with ExifReader
                 DateTime exifDateDigitized = new DateTime();
                 if (fileExtension.Equals(".jpg") || fileExtension.Equals(".jpeg"))
                 {
@@ -87,7 +84,7 @@ namespace Renamer
                 if (fileNameDate != new DateTime())
                 {
                     OutputHelpers.WriteColumns(new[]
-                    { fileName, "Date from filename:", fileNameDate.ToString(Settings.DateFormat) });
+                    { fileName, "Date from filename:", fileNameDate.ToString(Settings.DateFormat) + fileExtension });
                 }
                 else
                 {
@@ -97,25 +94,25 @@ namespace Renamer
                 // Print date found in XMP DateCreated property
                 if (xmpDateCreated != new DateTime())
                 {
-                    OutputHelpers.WriteColumns(new[] { "", "XMP DateCreated:", xmpDateCreated.ToString(Settings.DateFormat) });
+                    OutputHelpers.WriteColumns(new[] { "", "XMP DateCreated:", xmpDateCreated.ToString(Settings.DateFormat) + fileExtension });
                 }
 
                 // Print date found in MediaInfo Encoded_Date property
                 if (mediaInfoEncodedDate != new DateTime())
                 {
-                    OutputHelpers.WriteColumns(new[] { "", "MediaInfo Encoded_Date:", mediaInfoEncodedDate.ToString(Settings.DateFormat) });
+                    OutputHelpers.WriteColumns(new[] { "", "MediaInfo Encoded_Date:", mediaInfoEncodedDate.ToString(Settings.DateFormat) + fileExtension });
                 }
 
                 // Print date found in MediaInfo Mastered_Date property
                 if (mediaInfoMasteredDate != new DateTime())
                 {
-                    OutputHelpers.WriteColumns(new[] { "", "MediaInfo Mastered_Date:", mediaInfoMasteredDate.ToString(Settings.DateFormat) });
+                    OutputHelpers.WriteColumns(new[] { "", "MediaInfo Mastered_Date:", mediaInfoMasteredDate.ToString(Settings.DateFormat) + fileExtension });
                 }
 
                 // Print date found in EXIF Date Digitized property
                 if (exifDateDigitized != new DateTime())
                 {
-                    OutputHelpers.WriteColumns(new[] { "", "EXIF DateDigitized:", exifDateDigitized.ToString(Settings.DateFormat) });
+                    OutputHelpers.WriteColumns(new[] { "", "EXIF DateDigitized:", exifDateDigitized.ToString(Settings.DateFormat) + fileExtension });
                 }
 
                 // Print date found in File modified property
@@ -126,6 +123,10 @@ namespace Renamer
                 //var fileCreated = File.GetCreationTime(fileName);
                 //OutputHelpers.WriteColumns(new[] { "", "File created:", fileCreated.ToString(Settings.DateFormat) });
             }
+
+            Console.WriteLine();
+            Console.WriteLine("Press any key to exit application...");
+            Console.Read();
         }
     }
 }

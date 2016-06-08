@@ -21,12 +21,10 @@ If there are several files with the same date, the application adds a counter to
 The date used for the file name is found using these rules, using the first matching rule and then ignoring the rest.
 
 1. If the file contains EXIF data for "Date taken", use this date.
-2. If the filename contains a date, use this date.
-3. If no other information is found, use the date from file property "Modified".
+2. If the file is anything but a JPEG, it doesn't contain EXIF. Different file types contain different tags for creation date, the app will look for some of the more common ones.
+3. If the filename contains a date, use this date.
 
-### Why used "Modifed" instead of "Created" date?
-
-The file property "Modified" is not very reliable, but more reliable than "Created". For example if you use Google Photos and sync the photos to your computer with Google Drive, the "Modified" date will be the moment the photo was taken on your phone (unless you have also edited it on your phone), but "Created" date will be when the photo was synced to your computer.
+If no date tag of any kind can be found and the filename doesn't contain a date, the application will not rename the file. Then it is up to the user to manually rename the file to a date, for example based on the date of the photos taken at the same time.
 
 ## Parsing dates in filename
 

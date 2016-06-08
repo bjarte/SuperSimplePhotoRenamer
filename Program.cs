@@ -16,7 +16,9 @@ namespace Renamer
         {
 
             // Print column headers
-            OutputHelpers.WriteColumns(new[] { "Existing filename", "New filename", "Date source" });
+            Console.WriteLine();
+            OutputHelpers.WriteColumns(new[] { "EXISTING FILENAME", "NEW FILENAME", "DATE SOURCE" });
+            Console.WriteLine();
 
             string[] filePaths = Directory.GetFiles(Directory.GetCurrentDirectory());
 

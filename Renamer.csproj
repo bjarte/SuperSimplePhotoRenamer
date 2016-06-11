@@ -92,6 +92,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\MediaData.cs" />
     <Compile Include="MediaDataHelpers\ExifHelpers.cs" />
     <Compile Include="Helpers\FileTypeHelpers.cs" />
     <Compile Include="Helpers\OutputHelpers.cs" />

@@ -8,7 +8,7 @@ namespace Renamer.Helpers
     {
         public static DateTime ConvertToDateTime(this string input)
         {
-            DateTime output = new DateTime();
+            var output = new DateTime();
 
             var inputDigits = new string(input.ToCharArray().Where(x => char.IsDigit(x)).ToArray());
 

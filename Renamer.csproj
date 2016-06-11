@@ -92,11 +92,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MediaDataHelpers\ExifHelpers.cs" />
     <Compile Include="Helpers\FileTypeHelpers.cs" />
     <Compile Include="Helpers\OutputHelpers.cs" />
-    <Compile Include="Helpers\Settings.cs" />
+    <Compile Include="MediaDataHelpers\MediaInfoHelpers.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Helpers\StringHelpers.cs" />
-    <Compile Include="Helpers\XMPHelper.cs" />
+    <Compile Include="MediaDataHelpers\XmpHelpers.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

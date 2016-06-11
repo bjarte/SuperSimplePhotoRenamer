@@ -1,9 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using ExifLib;
-using MediaInfoLib;
 using Renamer.Helpers;
+using Renamer.MediaDataHelpers;
 using File = System.IO.File;
 
 namespace Renamer
@@ -12,15 +11,28 @@ namespace Renamer
     {
         private static void Main(string[] args)
         {
+            Console.WriteLine("Arguments available:");
+            OutputHelpers.WriteColumns(new[] { "/v", "Verbose output (more information about each file" });
+
+            // User defined settings
+            var settingVerbose = false;
+
+            foreach (var arg in args)
+            {
+                if (arg.ToLower().Contains("/v"))
+                {
+                    settingVerbose = true;
+                }
+            }
 
             // Print column headers
             Console.WriteLine();
             OutputHelpers.WriteColumns(new[] { "EXISTING FILENAME", "NEW FILENAME", "DATE SOURCE" });
             Console.WriteLine();
 
-            string[] filePaths = Directory.GetFiles(Directory.GetCurrentDirectory());
+            var filePaths = Directory.GetFiles(Directory.GetCurrentDirectory());
 
-            foreach (var filePath in filePaths.Where(x => File.Exists(x)))
+            foreach (var filePath in filePaths.Where(File.Exists))
             {
                 var fileName = Path.GetFileName(filePath);
                 if (string.IsNullOrEmpty(fileName))
@@ -35,38 +47,18 @@ namespace Renamer
                 }
 
                 // Get XMP metadata with taglib
-                DateTime xmpDateCreated = XMPHelper.GetXMPDateCreated(fileName);
+                var xmpDateCreated = XmpHelpers.GetXmpDateCreated(fileName);
 
                 // Get video metadata with MediaInfoLib
-                DateTime mediaInfoEncodedDate = new DateTime();
-                DateTime mediaInfoMasteredDate = new DateTime();
-                if (FileTypeHelpers.IsVideoFileType(fileExtension))
-                {
-                    MediaInfo mediaInfo = new MediaInfo();
-                    mediaInfo.Open(fileName);
-
-                    var encodedDateString = mediaInfo.Get(0, 0, "Encoded_Date");
-                    mediaInfoEncodedDate = encodedDateString.ConvertToDateTime();
-
-                    var masteredDateString = mediaInfo.Get(0, 0, "Mastered_Date");
-                    mediaInfoMasteredDate = masteredDateString.ConvertToDateTime();
-
-                    mediaInfo.Close();
-                }
+                var mediaInfoEncodedDate = MediaInfoHelpers.GetMediaInfoEncodedDate(fileName);
+                var mediaInfoMasteredDate = MediaInfoHelpers.GetMediaInfoMasteredDate(fileName);
 
                 // Get EXIF metadata with ExifReader
-                DateTime exifDateDigitized = new DateTime();
-                if (fileExtension.Equals(".jpg") || fileExtension.Equals(".jpeg"))
-                {
-                    using (ExifReader reader = new ExifReader(fileName))
-                    {
-                        reader.GetTagValue(ExifTags.DateTimeDigitized, out exifDateDigitized);
-                    }
-                }
+                var exifDateDigitized = ExifHelpers.GetExifDateDigitized(fileName);
+                var exifDateOriginal = ExifHelpers.GetExifDateTaken(fileName);
 
-                // Print existing filename
-                //OutputHelpers.WriteColumns(new[] { "Existing filename:", fileName });
 
+                // Define new filename
                 var newFileName = fileName;
                 var nameSource = "Original filename";
 
@@ -109,6 +101,14 @@ namespace Renamer
                     newFileName = exifDateDigitized.ToString(Settings.DateFormat) + fileExtension;
                     nameSource = "EXIF DateDigitized";
                     //OutputHelpers.WriteColumns(new[] { "EXIF DateDigitized:", newFileName });
+                }
+
+                // Print date found in EXIF Date Original property
+                if (exifDateOriginal != new DateTime())
+                {
+                    newFileName = exifDateOriginal.ToString(Settings.DateFormat) + fileExtension;
+                    nameSource = "EXIF DateOriginal";
+                    //OutputHelpers.WriteColumns(new[] { "EXIF DateOriginal:", newFileName });
                 }
 
                 OutputHelpers.WriteColumns(new[] { fileName, newFileName, nameSource });

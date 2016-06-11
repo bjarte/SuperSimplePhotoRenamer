@@ -4,8 +4,6 @@ using System.Linq;
 using ExifLib;
 using MediaInfoLib;
 using Renamer.Helpers;
-using TagLib;
-using TagLib.Xmp;
 using File = System.IO.File;
 
 namespace Renamer
@@ -37,21 +35,7 @@ namespace Renamer
                 }
 
                 // Get XMP metadata with taglib
-                DateTime xmpDateCreated = new DateTime();
-                if (fileExtension.Equals(".png") || fileExtension.Equals(".gif"))
-                {
-                    TagLib.File file = TagLib.File.Create(fileName);
-
-                    XmpTag xmp = file.GetTag(TagTypes.XMP) as XmpTag;
-                    if (xmp != null)
-                    {
-                        var tree = xmp.NodeTree;
-                        var node = tree.GetChild(XmpTag.PHOTOSHOP_NS, "DateCreated");
-                        var dateCreated = node.Value;
-
-                        DateTime.TryParse(dateCreated, out xmpDateCreated);
-                    }
-                }
+                DateTime xmpDateCreated = XMPHelper.GetXMPDateCreated(fileName);
 
                 // Get video metadata with MediaInfoLib
                 DateTime mediaInfoEncodedDate = new DateTime();

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Renamer.Models
+namespace MediadataServices.Models
 {
-    public class MediaData
+    public class Mediadata
     {
         public string Path { get; set; }
 

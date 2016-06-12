@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Linq;
 
-namespace Renamer.Helpers
+namespace MediadataServices.Helpers
 {
     public static class StringHelpers
     {

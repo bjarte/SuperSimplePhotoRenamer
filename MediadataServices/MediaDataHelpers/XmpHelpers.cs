@@ -2,7 +2,7 @@
 using TagLib;
 using TagLib.Xmp;
 
-namespace Renamer.MediaDataHelpers
+namespace MediadataServices.MediadataHelpers
 {
     public static class XmpHelpers
     {

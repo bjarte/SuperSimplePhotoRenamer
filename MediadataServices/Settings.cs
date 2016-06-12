@@ -1,4 +1,4 @@
-﻿namespace Renamer.Helpers
+﻿namespace MediadataServices
 {
     public static class Settings
     {

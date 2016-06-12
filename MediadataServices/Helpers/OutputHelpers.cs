@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Renamer.Helpers
+namespace MediadataServices.Helpers
 {
     public static class OutputHelpers
     {

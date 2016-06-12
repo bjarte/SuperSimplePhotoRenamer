@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 
-namespace Renamer.Helpers
+namespace MediadataServices.Helpers
 {
-    public static class FileTypeHelpers
+    public static class FiletypeHelpers
     {
         public static bool IsAllowedFileType(string fileType)
         {

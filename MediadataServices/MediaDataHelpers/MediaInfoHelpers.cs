@@ -1,8 +1,8 @@
 ﻿using System;
+using MediadataServices.Helpers;
 using MediaInfoLib;
-using Renamer.Helpers;
 
-namespace Renamer.MediaDataHelpers
+namespace MediadataServices.MediadataHelpers
 {
     public static class MediaInfoHelpers
     {

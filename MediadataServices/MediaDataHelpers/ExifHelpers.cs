@@ -1,7 +1,7 @@
 ﻿using System;
 using ExifLib;
 
-namespace Renamer.MediaDataHelpers
+namespace MediadataServices.MediadataHelpers
 {
     public static class ExifHelpers
     {

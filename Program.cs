@@ -1,11 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using Renamer.Helpers;
-using Renamer.MediaDataHelpers;
+using MediadataServices;
+using MediadataServices.Helpers;
+using MediadataServices.MediadataHelpers;
 using File = System.IO.File;
 
-namespace Renamer
+namespace MetadataFromFilename
 {
     public class Program
     {
@@ -41,7 +42,7 @@ namespace Renamer
                 }
 
                 var fileExtension = Path.GetExtension(fileName).ToLower();
-                if (!FileTypeHelpers.IsAllowedFileType(fileExtension))
+                if (!FiletypeHelpers.IsAllowedFileType(fileExtension))
                 {
                     continue;
                 }

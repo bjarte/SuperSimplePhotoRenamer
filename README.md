@@ -1,4 +1,12 @@
-﻿# How SuperSimplePhotoRenamer works and how to use it
+﻿# NB! This tool is far from finished
+ 
+ I started this project hoping to find an easy way to rename all my photos and videos in a standard format, but I have eventually realised the task is too big, because of all the different ways different camera and phone makers tag their images.
+ 
+ I also have way too many images that don't have any tags at all.
+ 
+ I keep the project as a learning excercise in how to read and write image and video tags in C#.
+ 
+ # How SuperSimplePhotoRenamer works and how to use it
 
 The application renames files with following file extensions: JPG, JPEG, PNG, GIF, MP4, AVI, MOV, MPG, MPEG
 
